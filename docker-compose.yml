@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  web:
+    image: mywebapp:0.0.0
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      FLASK_ENV: development
+      #SQL_URI: mysql+pymysql://root:password123@mysql_db/some_db
+      SQL_URI: postgresql+psycopg2://postgres:password123@postgres_db/postgres
+    volumes:
+      - ./mount:/app/mount
+  mysql_db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: password123
+      MYSQL_DATABASE: some_db
+  postgres_db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password123
+
+
+
